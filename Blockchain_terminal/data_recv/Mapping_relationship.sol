@@ -22,7 +22,7 @@ contract FileConverter {
         return fileIdToCid[fileId];
     }
 
-    function getFileHashAndSignature(uint256 fileId) public view returns (string memory) {
+    function getFileHash(uint256 fileId) public view returns (string memory) {
         return fileIdToHashAndSignature[fileId];
     }
 
