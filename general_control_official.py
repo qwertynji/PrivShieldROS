@@ -9,7 +9,7 @@ from pack.BasePacker import BasePacker
 from charm.toolbox.pairinggroup import PairingGroup, GT,serialize,deserialize
 from charm.toolbox.secretutil import SecretUtil
 from charm.toolbox.ABEnc import ABEnc  # 假设属性基加密库
-from charm.adapters.abenc_adapt_hybrid import HybridABEnc  # 混合加密适配器
+from charm.adapters.kpabenc_adapt_hybrid import HybridABEnc  # 混合加密适配器
 from charm.toolbox.symcrypto import AuthenticatedCryptoAbstraction
 from charm.schemes.abenc.abenc_lsw08 import KPabe
 from charm.core.engine.util import objectToBytes, bytesToObject
@@ -21,6 +21,8 @@ from cryptography.hazmat.primitives import serialization, hashes
 import socket as sk
 import pika
 import uuid
+import base64
+import binascii
 
 #TCP/IP实例
 tcp_cli = socket(AF_INET,SOCK_STREAM)
@@ -272,9 +274,10 @@ def main():
                     # 加密数据
                     encrypted_data = hyb_abe.encrypt(pk_deserialized, data, access_policy)
                     encrypted_data_serialized = objectToBytes(encrypted_data, groupObj)
+                    data_base = base64.urlsafe_b64encode(encrypted_data_serialized)
                     encrypted_file_path = os.path.join(root, f"encrypted_{file}")
                     with open(encrypted_file_path, 'wb') as encrypted_file:
-                        encrypted_file.write(encrypted_data_serialized)
+                            encrypted_file.write(data_base)
 
                     # 删除原始的明文文件
                     os.remove(file_path)
@@ -342,7 +345,9 @@ def main():
 
             # 反序列化（读取）
             with open('downloaded_file.jpg', 'rb') as f:
-                encrypted_data_deserialized = bytesToObject(f.read(), groupObj)
+                encoded_data = f.read()
+            decoded_data = base64.urlsafe_b64decode(encoded_data)
+            encrypted_data_deserialized = bytesToObject(decoded_data, groupObj)
 
             sk_file_path = 'sk_file'
             with open(sk_file_path, 'rb') as f:
