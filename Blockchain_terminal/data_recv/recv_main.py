@@ -91,35 +91,34 @@ if __name__ == '__main__':
         TCP_Socket.bind(('0.0.0.0', 5502))
         TCP_Socket.listen(5)
         print("Server started successfully, waiting for connection...")
+        client_socket, client_address = TCP_Socket.accept()
+        print(f"A connection is established with {client_address}")
         while True:
-            client_socket, client_address = TCP_Socket.accept()
-            print(f"A connection is established with {client_address}")
-            while True:
-                try:
-                    data = client_socket.recv(1024).decode()
-                    if not data:
-                        print("No data received, connection closed")
-                        break
-                    if data.endswith('!'):
-                        data = data[:-1]
-                        file_ID = int(data)
-                        print("file_ID_out:", file_ID)
-                        response = get_hash(file_ID).encode()
-                    elif data.endswith('$'):
-                        data = data[:-1]
-                        user_ID = int(data)
-                        print("user_ID_out:", user_ID)
-                        response = get_signature(user_ID).encode('utf-8')
-                    else:
-                        file_ID = int(data)
-                        print("file_ID_out:", file_ID)
-                        response = get_CID(file_ID).encode()
-                    client_socket.sendall(response)
-                except Exception as e:
-                    print(f"An exception occurs while processing data: {e}")
+            try:
+                data = client_socket.recv(1024).decode()
+                if not data:
+                    print("No data received, connection closed")
                     break
-            client_socket.close()
-            print("The client connection is closed.")
+                if data.endswith('!'):
+                    data = data[:-1]
+                    file_ID = int(data)
+                    print("file_ID_out:", file_ID)
+                    response = get_hash(file_ID).encode()
+                elif data.endswith('$'):
+                    data = data[:-1]
+                    user_ID = int(data)
+                    print("user_ID_out:", user_ID)
+                    response = get_signature(user_ID).encode('utf-8')
+                else:
+                    file_ID = int(data)
+                    print("file_ID_out:", file_ID)
+                    response = get_CID(file_ID).encode()
+                client_socket.sendall(response)
+            except Exception as e:
+                print(f"An exception occurs while processing data: {e}")
+                break
+        client_socket.close()
+        print("The client connection is closed.")
     except KeyboardInterrupt:
         print("The server has been manually shut down.")
     finally:
