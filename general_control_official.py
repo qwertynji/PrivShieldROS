@@ -358,18 +358,7 @@ def main():
             with open('decrypted_file.jpg', 'wb') as f:
                 f.write(decrypted_data)
             print("File decryption complete, decrypt file path: decrypted_file.jpg")
-            tcp_cli.close()
-            time.sleep(70)
-            try:
-                tcp_clii = socket(AF_INET,SOCK_STREAM)
-                print("Trying to connect to the blockchain end server......")
-                ipp = '8.134.222.175'
-                portt = 5502
-                tcp_clii.connect((ipp,portt))
-                print("The connection is successful!")
-            except Exception:
-                print ('Time out or unknow IP. Please Contact the Administrator.')
-                exit(1)
+            
             file_ID = input("Please enter the file ID(start with ! end):")
             id_to_send = file_ID.encode()
             try:
@@ -404,18 +393,7 @@ def main():
                 print("The hash summary is verified")
             else:
                 print("The hash summary validation failed. Procedure")
-            tcp_cli.close()
-            time.sleep(70)
-            try:
-                tcp_clii = socket(AF_INET,SOCK_STREAM)
-                print("Trying to connect to the blockchain end server......")
-                ipp = '8.134.222.175'
-                portt = 5502
-                tcp_clii.connect((ipp,portt))
-                print("The connection is successful!")
-            except Exception:
-                print ('Time out or unknow IP. Please Contact the Administrator.')
-                exit(1)
+                
             user_ID = input("Please enter your user ID(ending with $):")
             id_to_send = user_ID.encode()
             try:
@@ -428,7 +406,6 @@ def main():
                     user_signature = tcp_clii.recv(1024) 
                     with open('download_user_signature', 'wb') as f:
                         f.write(user_signature)
-
                 except Exception as e:
                     print('Failed to receive data from the server. Exception:', e)
                     exit(1)
