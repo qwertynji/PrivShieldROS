@@ -44,7 +44,6 @@ def store_id_public_pem_on_blockchain(file_id, receive):
     print(f'Transaction receipts have been mined: \n{txn_receipt}')
     print("User digital signature public key link successfully!")
 
-
 def callback(ch, method, properties, body):
     time.sleep(2)
     receive = body.decode('utf-8')
