@@ -303,7 +303,7 @@ def main():
             print("Authentication successful!")
             if res == True:
                 tcp_cli.close()
-                time.sleep(70)
+                time.sleep(40)
                 try:
                     tcp_clii = socket(AF_INET,SOCK_STREAM)
                     print("Trying to connect to the blockchain end server......")
