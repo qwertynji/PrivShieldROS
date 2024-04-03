@@ -86,7 +86,6 @@ if __name__ == '__main__':
         time.sleep(10)
     try:
         TCP_Socket.close()
-        time.sleep(25)
         TCP_Socket = socket(AF_INET, SOCK_STREAM)
         TCP_Socket.bind(('0.0.0.0', 5502))
         TCP_Socket.listen(5)
