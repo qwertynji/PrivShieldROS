@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-'''
-后台总控程序
-'''
 import threading
 import time
 from web3 import Web3
@@ -11,7 +8,6 @@ import json
 import multiprocessing
 import pyargs
 import asyncio
-#from chain_operations import data_on_chain_copy
 from sm2 import SM2
 from sm4 import decrypt_ecb
 from chain_operations import data_on_chain_cop,register,Info_Check,Authority_Grant
@@ -159,10 +155,7 @@ def Recv_data(sock:socket,sem:threading.Semaphore,lock,token,accounts):
                 elif command == 'verification':
                     username = Recv_Data['username']
                     passwd = Recv_Data['passwd']
-                    print("username:",username)
-                    print("passwd:",passwd)
                     passwd_ = str(r.lindex(str(username), 2))
-                    print("passwd_:",passwd_)
                     if str(passwd_) == str(passwd):
                         client_sock.send('Acc'.encode('utf-8'))
                     else:
