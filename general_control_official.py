@@ -8,7 +8,7 @@ import re
 from pack.BasePacker import BasePacker
 from charm.toolbox.pairinggroup import PairingGroup, GT,serialize,deserialize
 from charm.toolbox.secretutil import SecretUtil
-from charm.toolbox.ABEnc import ABEnc  # 假设属性基加密库
+from charm.toolbox.ABEnc import ABEnc  # 属性基加密库
 from charm.adapters.kpabenc_adapt_hybrid import HybridABEnc  # 混合加密适配器
 from charm.toolbox.symcrypto import AuthenticatedCryptoAbstraction
 from charm.schemes.abenc.abenc_lsw08 import KPabe
