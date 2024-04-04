@@ -3,10 +3,11 @@ import time
 from redis_flush import Recv_data
 import threading
 from socket import *
-lines = []
-recv_threads = []
 from chain_operations import Ethereum_info_get
 from web3 import Web3
+
+lines = []
+recv_threads = []
 host, port = "0.0.0.0", 5500
 
 def get_CID(file_ID):
@@ -73,15 +74,15 @@ if __name__ == '__main__':
     TCP_Socket.listen(201)
     print("listening...")
     token, accounts = Ethereum_info_get()
-    sem = threading.Semaphore(10)
+    sem = threading.Semaphore(1)
     lock = threading.Lock()
-    for i in range(10):
+    for i in range(1):
         recv_threads.append(threading.Thread(target=Recv_data,args=(TCP_Socket,sem,lock,token,accounts,)))
     try:
-        for i in range(10):
+        for i in range(1):
             recv_threads[i].start()
-        for i in range(10):
-            recv_threads[i].join(timeout=5)
+        for i in range(1):
+            recv_threads[i].join(timeout=12)
     except RuntimeError:
         time.sleep(10)
     try:
