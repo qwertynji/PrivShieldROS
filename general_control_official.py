@@ -24,9 +24,9 @@ import uuid
 import base64
 import binascii
 
-#TCP/IP实例
+# TCP/IP实例
 tcp_cli = socket(AF_INET,SOCK_STREAM)
-# #目标IP/Port
+# 目标IP/Port
 ip = '8.134.222.175'
 port = 5500
 
@@ -303,7 +303,7 @@ def main():
             print("Authentication successful!")
             if res == True:
                 tcp_cli.close()
-                time.sleep(40)
+                time.sleep(3)
                 try:
                     tcp_clii = socket(AF_INET,SOCK_STREAM)
                     print("Trying to connect to the blockchain end server......")
