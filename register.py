@@ -1,4 +1,3 @@
-# -*- 需要运行在py3的环境中 -*-
 import time
 import sys
 import os
